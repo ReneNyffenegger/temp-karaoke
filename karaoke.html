@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <title>Karaoke</title>
+</head>
+  <script>
+
+var running;
+var heightMenu;
+var height;
+var zeilenPerScreen = 5;
+var heightZeile;
+var timeStart;
+var zeilen;
+var sek;
+
+
+var l = 1;
+
+function start_stop(but) {
+  if (but.value == 'Start') {
+    but.value = 'Stop';
+    running = true;
+    timeStart = new Date().getTime() / 1000;
+    sek = document.getElementById('sek').value;
+    ticker();
+  }
+  else {
+    but.value = 'Start';
+    running = false;
+  }
+}
+
+function ticker() {
+
+  if (running) {
+    console.log(window.pageYOffset);
+
+    var timeNow = new Date().getTime() / 1000;
+    console.log('timeNow = ' + timeNow);
+
+    var timeDiff = timeNow - timeStart;
+    var offsetZeilen = zeilen.length / sek * timeDiff;
+
+    window.scrollTo(0, offsetZeilen * heightZeile    );
+    setTimeout(ticker, 20);
+  }
+
+
+}
+
+function main() {
+  running = false;
+
+//alert(window.innerWidth + ' x ' + window.innerHeight);
+
+  heightMenu = 30;
+  height     = window.innerHeight - heightMenu;
+
+  heightZeile = height / zeilenPerScreen;
+
+  zeilen = [
+
+     { txt: 'Ach, wer kann Dich würdig loben,'},
+     { txt: 'Großer Gott von Ewigkeit!'},
+     { txt: 'Was auf Erden und was droben,'},
+     { txt: 'Zeugt von Deiner Gütigkeit.'},
+     { txt: 'Du, Du bist des Lobes wert;'},
+     { txt: 'Selig, wer Dich preist und ehrt!'},
+
+     { txt: 'Wer kann Deine Lieb\' ergründen,'},
+     { txt: 'Deine Gnade, Deine Huld!'},
+     { txt: 'Gabst den Sohn für unsre Sünden,'},
+     { txt: 'Sprachst uns frei von aller Schuld.'},
+     { txt: 'Du, Du bist des Lobes wert;'},
+     { txt: 'Selig, wer Dich preist und ehrt!'},
+
+     { txt: 'Wer kann Deine Treu\' ermessen,'},
+     { txt: 'Deine Langmut, Sorg\' und Müh\'!'},
+     { txt: 'Mag ein Weib ihr Kind vergessen,'},
+     { txt: 'Du vergißt die Deinen nie.'},
+     { txt: 'Du, Du bist des Lobes wert;'},
+     { txt: 'Selig, wer Dich preist und ehrt!'},
+
+     { txt: 'Wer kann Deine Größe nennen'},
+     { txt: 'Und Dein Wundertun verstehn!'},
+     { txt: 'Wer kann, wie Du bist, Dich kennen'},
+     { txt: 'Und in Deine Tiefen sehn!'},
+     { txt: 'Ja, Du bist des Lobes wert;'},
+     { txt: 'Selig, wer Dich preist und ehrt!'}
+
+  ];
+
+  for (var i=0; i<zeilen.length; i++) {
+
+    var d = document.createElement('div');
+    d.innerHTML = zeilen[i].txt;
+    d.style.top=(heightMenu + heightZeile/2 + i * heightZeile) + 'px';
+    d.style.position='absolute';
+    d.style.fontSize = height/zeilenPerScreen / 3.5 + 'pt';
+    d.style.marginLeft = '20px'
+    document.body.appendChild(d);
+
+//  console.log(zeilen[i].txt);
+  }
+
+}
+
+  </script>
+  <style>
+
+    body {
+      margin: 0;
+    }
+
+    #menu {
+      background-color: #ffe035;
+      height: 50px;
+      vertical-align: center;
+      position: fixed;
+      top: 0px;
+      width: 100%;
+      margin: 0px;
+      z-index: 999;
+    }
+    #menu-content {
+      position: absolute;
+      top: 7px;
+      left: 20px;
+    }
+  </style>
+<body onload='main()'>
+  <div id='menu'>
+     <div id='menu-content'>
+        Dauer (Sek.) <input type='text' size=3 value=150 id='sek'></input>
+        <span>&nbsp;</span>
+        <input type='button' value='Start' onclick='start_stop(this)'>
+     </div>
+
+
+  </div>
+
+</body>
+</html>
