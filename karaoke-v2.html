@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <title>Karaoke</title>
+</head>
+
+  <style type='text/css'>
+    body {
+      margin: 0;
+    }
+    #slide {
+      border: 1px solid #9999cc;
+      position: absolute;
+      background-color: #eeeeff;
+    }
+    .p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
+<!--
+  <style>
+
+
+    #menu {
+      background-color: #ffe035;
+      height: 50px;
+      vertical-align: center;
+      position: fixed;
+      top: 0px;
+      width: 100%;
+      margin: 0px;
+      z-index: 999;
+    }
+    #menu-content {
+      position: absolute;
+      top: 7px;
+      left: 20px;
+    }
+  </style>
+  -->
+
+  <script>
+
+    var padding =  10;
+    var wSlide  = 400;
+    var hSlide  = 300;
+    var divSlide;
+// var running;
+// var heightMenu;
+// var height;
+// var zeilenPerScreen = 5;
+// var heightZeile;
+// var timeStart;
+// var slides;
+// var sek;
+
+
+//var l = 1;
+
+// function start_stop(but) {
+//   if (but.value == 'Start') {
+//     but.value = 'Stop';
+//     running = true;
+//     timeStart = new Date().getTime() / 1000;
+//     sek = document.getElementById('sek').value;
+//     ticker();
+//   }
+//   else {
+//     but.value = 'Start';
+//     running = false;
+//   }
+// }
+// 
+// function ticker() {
+// 
+//   if (running) {
+//     console.log(window.pageYOffset);
+// 
+//     var timeNow = new Date().getTime() / 1000;
+//     console.log('timeNow = ' + timeNow);
+// 
+//     var timeDiff = timeNow - timeStart;
+//     var offsetZeilen = zeilen.length / sek * timeDiff;
+// 
+//     window.scrollTo(0, offsetZeilen * heightZeile    );
+//     setTimeout(ticker, 20);
+//   }
+// 
+// 
+// }
+
+function nextSlide(s) {
+
+//for (var s=0; s<slides.length; s++) {
+//  console.log(slides[s].duration);
+    while (divSlide.firstChild) {
+      divSlide.removeChild(divSlide.firstChild);
+    }
+    for (var t=0; t<slides[s].txt.length; t++) {
+      var p = document.createElement('div');
+      p.innerHTML = slides[s].txt[t].p;
+      p.className = "p";
+//    d.style.top=(heightMenu + heightZeile/2 + i * heightZeile) + 'px';
+//    d.style.position='absolute';
+//    d.style.fontSize = height/zeilenPerScreen / 3.5 + 'pt';
+//    d.style.marginLeft = '20px'
+      divSlide.appendChild(p);
+
+    }
+
+  if (s<slides.length) {
+    setTimeout(function() {nextSlide(s+1);}, slides[s].duration * 530);
+  }
+//}
+}
+
+function main() {
+//running = false;
+  
+  divSlide = document.getElementById('slide');
+
+//alert(window.innerWidth + ' x ' + window.innerHeight);
+
+  var xSlide = (window.innerWidth  - wSlide) / 2;
+  var ySlide = (window.innerHeight - hSlide) / 2;
+
+  console.log("divSlide = " + divSlide);
+
+  divSlide.style.padding = padding + "px";
+  divSlide.style.left    =(xSlide)  + "px";
+  divSlide.style.top     =(ySlide)  + "px";
+  divSlide.style.width   =(wSlide-2*padding) + "px";
+  divSlide.style.height  =(hSlide-2*padding)  + "px";
+
+  if (window.innerWidth / wSlide < window.innerHeight / hSlide) {
+    var scale = window.innerWidth / wSlide * 0.9;
+  }
+  else {
+    var scale = window.innerHeight / hSlide * 0.9;
+  }
+
+  divSlide.style.transform = "scale(" + scale + ")";
+
+
+
+//heightMenu = 30;
+//height     = window.innerHeight - heightMenu;
+
+//heightZeile = height / zeilenPerScreen;
+
+  slides = [
+    { duration: 32,
+      txt: [
+       { p: 'Ach, wer kann Dich würdig loben,'},
+       { p: 'Großer Gott von Ewigkeit!'},
+       { p: 'Was auf Erden und was droben,'},
+       { p: 'Zeugt von Deiner Gütigkeit.'},
+      ]
+    },
+    { duration: 16,
+      txt: [
+       { p: 'Du, Du bist des Lobes wert;'},
+       { p: 'Selig, wer Dich preist und ehrt!'},
+      ]
+    },
+    { duratiion: 32,
+      txt: [
+       { p: 'Wer kann Deine Lieb\' ergründen,'},
+       { p: 'Deine Gnade, Deine Huld!'},
+       { p: 'Gabst den Sohn für unsre Sünden,'},
+       { p: 'Sprachst uns frei von aller Schuld.'},
+      ]
+    },
+    { duration: 16, 
+      txt: [
+       { p: 'Du, Du bist des Lobes wert;'},
+       { p: 'Selig, wer Dich preist und ehrt!'},
+      ]
+    },
+    { duration: 32,
+      txt: [
+       { p: 'Wer kann Deine Treu\' ermessen,'},
+       { p: 'Deine Langmut, Sorg\' und Müh\'!'},
+       { p: 'Mag ein Weib ihr Kind vergessen,'},
+       { p: 'Du vergißt die Deinen nie.'},
+     ],
+    },
+    { duration: 16,
+      txt: [
+       { p: 'Du, Du bist des Lobes wert;'},
+       { p: 'Selig, wer Dich preist und ehrt!'},
+      ]
+    },
+    { duration: 32,
+      txt: [
+       { p: 'Wer kann Deine Größe nennen'},
+       { p: 'Und Dein Wundertun verstehn!'},
+       { p: 'Wer kann, wie Du bist, Dich kennen'},
+       { p: 'Und in Deine Tiefen sehn!'},
+     ],
+    },
+    { duration: 16,
+      txt: [
+       { p: 'Ja, Du bist des Lobes wert;'},
+       { p: 'Selig, wer Dich preist und ehrt!'}
+      ]
+    }
+  ];
+
+  nextSlide(0);
+
+//  for (var i=0; i<zeilen.length; i++) {
+//
+//    var d = document.createElement('div');
+//    d.innerHTML = zeilen[i].txt;
+//    d.style.top=(heightMenu + heightZeile/2 + i * heightZeile) + 'px';
+//    d.style.position='absolute';
+//    d.style.fontSize = height/zeilenPerScreen / 3.5 + 'pt';
+//    d.style.marginLeft = '20px'
+//    document.body.appendChild(d);
+//
+////  console.log(zeilen[i].txt);
+//  }
+
+}
+
+  </script>
+<body onload='main()'>
+  <!--
+  <div id='menu'>
+     <div id='menu-content'>
+        Dauer (Sek.) <input type='text' size=3 value=150 id='sek'></input>
+        <span>&nbsp;</span>
+        <input type='button' value='Start' onclick='start_stop(this)'>
+     </div>
+  -->
+
+    <div id='slide'>
+      hello
+    </div>
+
+
+  </div>
+
+</body>
+</html>
